@@ -31,7 +31,7 @@ def runCheck(compid,which=1):
     dnfcounter = defaultdict(int)
 
     for val in data["events"]:
-        if val['id] != '333mbf':
+        if val['id'] != '333mbf':
             for val2 in val['rounds']:
                 for val3 in val2['results']:
                     for val4 in val3['attempts']:

@@ -31,14 +31,15 @@ def runCheck(compid,which=1):
     dnfcounter = defaultdict(int)
 
     for val in data["events"]:
-        for val2 in val['rounds']:
-            for val3 in val2['results']:
-                for val4 in val3['attempts']:
+        if val['id] != '333mbf':
+            for val2 in val['rounds']:
+                for val3 in val2['results']:
+                    for val4 in val3['attempts']:
 
-                    if val4['result'] > 0:
-                        c[val3['personId']] +=val4['result']
-                    elif val4['result'] == -1:
-                        dnfcounter[val3['personId']] += 1
+                        if val4['result'] > 0:
+                            c[val3['personId']] +=val4['result']
+                        elif val4['result'] == -1:
+                            dnfcounter[val3['personId']] += 1
 
     translater = {}
 

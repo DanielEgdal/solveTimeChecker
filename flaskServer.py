@@ -1,5 +1,5 @@
 import flask
-# from wsgiref.simple_server import make_server
+from wsgiref.simple_server import make_server
 import re
 from markupsafe import escape
 
@@ -32,7 +32,7 @@ def calculateOtherOrder(compid,which):
     escapedCompid = escape(compid)
     escapedWhich = escape(which)
     pattern = re.compile("^[a-zA-Z\d]+$")
-    pattern2 = re.compile("^(0|1)$")
+    pattern2 = re.compile("^(0|1|2)$")
     
     if pattern.match(escapedCompid) and pattern2.match(escapedWhich):
         printingString = makeHtml(escapedCompid,int(escapedWhich))
@@ -40,11 +40,11 @@ def calculateOtherOrder(compid,which):
     else:
         return "doesn't match correct format"
 
-app.run()
+# host = '' 
+host = '0.0.0.0'
+port = 8000
+# app.run(host=host,port=port)
 
-# host = ""
-# port = 80
-
-# with make_server(host,port,app) as server:
-#     print(f"serving on {host}:{port}")
-#     server.serve_forever()
+with make_server(host,port,app) as server:
+    print(f"serving on http://{host}:{port}/")
+    server.serve_forever()

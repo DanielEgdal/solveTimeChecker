@@ -1,5 +1,5 @@
 import flask
-from wsgiref.simple_server import make_server
+# from wsgiref.simple_server import make_server
 import re
 from markupsafe import escape
 
@@ -40,11 +40,11 @@ def calculateOtherOrder(compid,which):
     else:
         return "doesn't match correct format"
 
-# app.run()
+app.run()
 
-host = ""
-port = 80
+# host = ""
+# port = 80
 
-with make_server(host,port,app) as server:
-    print(f"serving on {host}:{port}")
-    server.serve_forever()
+# with make_server(host,port,app) as server:
+#     print(f"serving on {host}:{port}")
+#     server.serve_forever()

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    
+    {% if user_name %}
+    <p> You are somehow still logged in (as {{user_name}}). Try and clear your cookies for the site if this is not intended (closing the site should be enough).
+    {% else %}
+    <p>You are in the playground and not logged in. To try out some features go to /comp/<bold>CompIDYouWantToTest</bold> </p>.
+    {% endif %}
+    
+</p>
+{% endblock %}

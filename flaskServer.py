@@ -1,50 +1,113 @@
-import flask
-from wsgiref.simple_server import make_server
+from flask import session, Flask, render_template,request,redirect,url_for,jsonify,Response
 import re
 from markupsafe import escape
+from WCIFManip import *
 
-from checkCumulativeTime import makeHtml
+from checkCumulativeTime import *
+from secret_key import secret_key
 
-from flask import Flask
 app = Flask(__name__)
 
+app.config.update(
+    SECRET_KEY = secret_key,
+    SESSION_COOKIE_SECURE = True,
+    PERMANENT_SESSION_LIFETIME = 3600
+)
+
+
+@app.before_request
+def give_name():
+    if 'name' not in session:
+        session['name'] = None
 
 @app.route('/')
-def startPage():
-    return "Hi, enter a competition ID into the URL"
+def startPage(): # TODO make it use a different WCA App
+    return render_template('index.html',user_name=session['name'])
 
+@app.route('/logout',methods=['GET','POST'])
+def logout():
+    keys = [key for key in session.keys()]
+    for key in keys:
+        session.pop(key)
+    return redirect(url_for('home'))
+
+@app.route('/show_token') # If we can get SSL/Https, then this function might be able to display the code. Or better, oauth can happen as intended.
+def show_token():
+    return render_template('show_token.html',user_name=session['name'])
+
+@app.route('/process_token',methods=['POST'])
+def process_token():
+    access_token_temp = escape(request.form['access_token'])
+    access_token= access_token_temp.split('access_token=')[1].split('&')[0]
+    session['token'] = {'Authorization':f"Bearer {access_token}"}
+    return "Redirect should be happening to /me. Otherwise do it manually."
+
+@app.route('/me', methods = ['POST', 'GET'])
+def logged_in():
+    if request.method == 'POST':
+        token = escape(request.form['token'])
+        session['token'] = {'Authorization':f"Bearer {token}"}
+    if 'token' in session:
+        if not session['name']:
+            me = get_me(session['token'])
+            if me.status_code == 200:
+                user_name = json.loads(me.content)['me']['name']
+                session['name'] = user_name
+            else:
+                return f"Some error occured: {me.status_code}, {me.content}"
+        comps = get_coming_comps(session['token'])
+        return render_template('logged_in.html',user_name=session['name'],comps=comps)   
+    else:
+        return "You are currently not authorized. Either go to the playground or ensure you are logged in."
 
 @app.route('/<compid>')
 def calculate(compid):
-
+    fail_string = "The ID you have hardcoded into the URL doesn't match a valid format of a competition url."
     escapedCompid = escape(compid)
-    pattern = re.compile("^[a-zA-Z\d]+$")
-    
-    if pattern.match(escapedCompid):
-        printingString = makeHtml(escapedCompid)
-        return printingString
+    if len(escapedCompid) <= 32:
+        pattern = re.compile("^[a-zA-Z\d]+$")
+        if pattern.match(escapedCompid):
+            session['compid'] = compid
+            wcif,statusCode =  getWcif(session['compid'],session['token'])
+            session['canAdminComp'] = True if statusCode == 200 else False
+            if not session['canAdminComp']:
+                wcif,_ =  getWCIFPublic(session['compid'],session['token'])
+            # printingString = makeHtml(wcif)
+            return render_template("comp_settings.html")
+        else:
+            return fail_string
     else:
-        return "doesn't match correct format"
+        fail_string
 
-@app.route('/<compid>/<which>')
-def calculateOtherOrder(compid,which):
-
-    escapedCompid = escape(compid)
-    escapedWhich = escape(which)
-    pattern = re.compile("^[a-zA-Z\d]+$")
-    pattern2 = re.compile("^(0|1|2)$")
+@app.route('/show',methods=['GET','POST'])
+def showCompetition():
+    if request.method == 'POST':
+        form_data = request.form
+        
+        tempEventsCal = escape(form_data["eventsCalculate"]).strip().lower()
+        competitorOrdering = escape(form_data["competitorOrdering"]).strip().lower()
+        pattern2 = re.compile("^(0|1)$")
+        if pattern2.match(competitorOrdering):
+            session['competitorOrdering'] = int(competitorOrdering)
+        if not tempEventsCal:
+            session['eventsCalculate'] = []
+        else:
+            session['eventsCalculate'] = [event.strip() for event in tempEventsCal.split(',')]
     
-    if pattern.match(escapedCompid) and pattern2.match(escapedWhich):
-        printingString = makeHtml(escapedCompid,int(escapedWhich))
-        return printingString
+    if session['canAdminComp']:
+        wcif,statusCode =  getWcif(session['compid'],session['token'])
     else:
-        return "doesn't match correct format"
+        wcif,_ =  getWCIFPublic(session['compid'],session['token'])
+        statusCode = 401
+    if not session['eventsCalculate']:
+        printEvents = "all events"
+    else:
+        printEvents = session['eventsCalculate'] 
+    overview = applySorting(getSolveTime(wcif,session['eventsCalculate']),session['competitorOrdering'])
+    return render_template("show_comp.html",overview=overview,status=statusCode,events=printEvents)
 
-# host = '' 
-host = '0.0.0.0'
-port = 8000
 # app.run(host=host,port=port)
+# app.run(debug=True)
 
-with make_server(host,port,app) as server:
-    print(f"serving on http://{host}:{port}/")
-    server.serve_forever()
+if __name__ == '__main__':
+    app.run(port=5000)

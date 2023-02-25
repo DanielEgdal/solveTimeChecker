@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block extrahead %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{{ url_for('static', filename='js/get_token.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+<p>Hi! A redirect should be occuring any time by now!. If more than 5 seconds pass, feel free to manually type in the /me url.</p>
+
+{% endblock %}

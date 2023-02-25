@@ -1,0 +1,71 @@
+.managerStatus {
+    /* width: 96%; */
+    height: 20px;
+    border: 1px solid black;
+    padding: 10px;
+    /* margin: 11px; */
+    display: flex;
+    align-items: center;
+  }
+
+.goodManager {
+    background-color: #27ff27;
+  }
+
+.warningManager {
+    background-color: yellow;
+}
+
+/* .myComps li {
+  display:inline-block;
+  background-color: grey;
+  border:1px solid #000;
+  color: red;
+  padding:20px;
+} */
+
+.my_comps {
+  list-style-type: none;
+  padding: 0;
+}
+
+.my_comps li{
+  border: 1px solid black;
+  background-color: #dedede;
+  padding: 10px;
+  margin: 5px;
+}
+
+.my_comps li a {
+  display: block;
+  text-decoration: none;
+  color: black; 
+}
+
+
+/* p.managerStatus {
+    background-color: green;
+} */
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+form p {
+  /* display: block; */
+  /* border: 1px solid black; */
+  margin: 10px 0;
+}
+
+form input[type="text"], form input[type="checkbox"], form input[type="submit"] {
+  /* margin-left: 10px; */
+  margin-top: 5px;
+  display: flex;
+}
+
+.formInfo {
+  margin-top: -10px;
+  color: grey;
+}

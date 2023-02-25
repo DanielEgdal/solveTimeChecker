@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DVE Solve time checker</title>
+    <link rel="shortcut icon" href="{{url_for('static',filename='logo.png')}}">
+    <link rel="stylesheet"  type="text/css" href="{{url_for('.static', filename='style.css')}}">
+    {% block extrahead %} {% endblock %}
+</head>
+<body>
+    {% block content %} {% endblock %}
+
+    <hr>
+
+    {% if user_name %}
+    <p>Logged in as {{user_name}} </p>
+    <form action="/me" class="inline">
+        <button class="float-left submit-button" >Go to my upcoming organised comps</button>
+    </form>
+
+    <form action="/logout" class="inline">
+        <button class="float-left submit-button" >Logout</button>
+    </form>
+    {% else %}
+    <p>Not logged in</p>
+    {% endif %}
+    
+    
+</body>
+</html>

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>{{comp}}</h2>
+{% if status == 200 %}
+<p class="managerStatus goodManager">You have admin access to this competition.</p>
+{% else %}
+<p class="managerStatus warningManager">You don't have organiser access to this competition. This means it may take up to 5 minutes for the WCIF to update.</p>
+{% endif %}
+
+<p>Calculation is done for {{events}}, along with other settings from your cookie. Remember to sync in WCA live to have the latest results.</p>
+
+<table border=1>
+<tr><td>Name</td><td>Time Used</td><td>DNFs</td><td>Attempts Entered</td><td>Solves Regged</td></tr>
+{% for val in overview %}
+    <tr><td>{{val[0][:30]}}</td><td>{{val[1].printTime}}</td><td>{{val[1].DNFCount}}</td><td>{{val[1].solvesDone}}</td><td>{{val[1].solvesRegged}}</td></tr>
+
+{% endfor %}
+</table>
+
+{% endblock %}

@@ -34,12 +34,22 @@
   background-color: #dedede;
   padding: 10px;
   margin: 5px;
+  display: flex; /* add display:flex */
+}
+
+.my_comps li.checkbox::after {
+  content: "\2611"; /* Unicode character for empty checkbox */
+  display: inline-block;
+  float: right;
+  margin-left: 10px;
+  color: green;
 }
 
 .my_comps li a {
   display: block;
   text-decoration: none;
   color: black; 
+  flex: 1;
 }
 
 

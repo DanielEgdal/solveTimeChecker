@@ -5,8 +5,11 @@
         Hello, {{ user_name }}. Below you can find all of your upcoming competitions.
         <ul class="my_comps">
         {% for comp in comps%}
-        
+            {% if comp[2] %}
+            <li class="checkbox"> <a href="/{{comp[1]}}">{{comp[0]}}</a> </li>
+            {% else %}
             <li> <a href="/{{comp[1]}}">{{comp[0]}}</a> </li>
+            {% endif %}
         
         {% endfor %}
         </ul>

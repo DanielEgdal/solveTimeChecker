@@ -118,10 +118,10 @@ def showCompetition():
     return render_template("show_comp.html",overview=overview,status=statusCode,events=printEvents)
 
 # app.run(host=host,port=port)
-app.run(debug=True)
+# app.run(debug=True)
 
-# if __name__ == '__main__':
-#     app.run(port=5000)
+if __name__ == '__main__':
+    app.run(port=5000)
 
 
 # https://www.worldcubeassociation.org/api/v0/users/6777?upcoming_competitions=true&ongoing_competitions=true

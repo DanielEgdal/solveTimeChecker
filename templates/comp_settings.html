@@ -2,12 +2,12 @@
 
 {% block content %}
 
-<form action="/show" method="POST"
+<form action="/show" method="POST">
     <br>
     <p>Events to calculate <input type = "text" name = "eventsCalculate" /> </p>
     <p class="formInfo">Leave this blank to check all events. Remember to use event IDs, comma separated</p>
     <p>Competitor ordering <input type = "text" value=0 name = "competitorOrdering" /> </p>
     <p class="formInfo">Use 0 for by time, use 1 for by name.</p>
-    <p>Show competitions <input type="submit" name = "submit" /> </p>
+    <p>Show competitors <input type="submit" name = "submit" /> </p>
 </form>
 {% endblock %}

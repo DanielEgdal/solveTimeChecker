@@ -84,7 +84,7 @@ def calculate(compid):
             if not session['canAdminComp']:
                 wcif,_ =  getWCIFPublic(session['compid'])
             # printingString = makeHtml(wcif)
-            return render_template("comp_settings.html")
+            return render_template("comp_settings.html",user_name=session['name'])
         else:
             return fail_string
     else:

@@ -15,12 +15,14 @@
 
     {% if user_name %}
     <p>Logged in as {{user_name}} </p>
-    <a href="/me">
-        <button>Go to my upcoming comps</button>
+    <div class="divtest">
+    <a class='break' href="/me">
+        <button class="medium">Go to my upcoming comps</button>
     </a> 
-
-    <a href="/logout">
-        <button>Logout</button>
+    </div>
+    <br>
+    <a class='break' href="/logout">
+        <button class="small">Logout</button>
     </a> 
     {% else %}
     <p>Not logged in</p>

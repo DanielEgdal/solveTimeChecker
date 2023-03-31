@@ -119,7 +119,7 @@ def showCompetition():
     else:
         printEvents = session['eventsCalculate'] 
     overview = applySorting(getSolveTime(wcif,session['eventsCalculate']),session['competitorOrdering'])
-    return render_template("show_comp.html",overview=overview,status=statusCode,events=printEvents,comp=session['compid'])
+    return render_template("show_comp.html",overview=overview,status=statusCode,events=printEvents,comp=session['compid'],user_name=session['name'])
 
 # app.run(host=host,port=port)
 

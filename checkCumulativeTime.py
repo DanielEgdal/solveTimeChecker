@@ -45,7 +45,10 @@ def getCompetitors(data,eventsCheck):
                         elif eventOv[event] in ['m','3']:
                             c.solvesRegged += 3
                         else:
-                            print('format not defined',event)
+                            if event == '333mbf':
+                                pass
+                            else:
+                                print('format not defined',event)
                     personOv[person['registrantId']] = c
     return personOv
 

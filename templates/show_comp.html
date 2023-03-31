@@ -13,7 +13,7 @@
 <p>Calculation is done for {{events}}, along with other settings from your cookie. Remember to sync in WCA live to have the latest results.</p>
 
 <table border=1>
-<tr><td>Name</td><td>Time Used</td><td>DNFs</td><td>Attempts Entered</td><td>Solves Regged</td></tr>
+<tr><td>Name</td><td>Time Used</td><td>DNFs</td><td># Entered</td><td># Regged</td></tr>
 {% for val in overview %}
     <tr><td>{{val[0][:30]}}</td><td>{{val[1].printTime}}</td><td>{{val[1].DNFCount}}</td><td>{{val[1].solvesDone}}</td><td>{{val[1].solvesRegged}}</td></tr>
 

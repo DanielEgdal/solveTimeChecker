@@ -48,6 +48,10 @@ def process_token():
 def playground():
     return render_template('playground.html',user_name=session['name'])
 
+@app.route("/localhost")
+def localhost_login():
+    return redirect("https://www.worldcubeassociation.org/oauth/authorize?client_id=jvK8thQ_pdL4Tf2lmXcjuQrr11X1mjw0p0UtF8M4q4o&redirect_uri=http%3A%2F%2Flocalhost%3A5000%2Fshow_token&response_type=token&scope=manage_competitions+public")
+
 @app.route('/me', methods = ['POST', 'GET'])
 def logged_in():
     if request.method == 'POST':
@@ -84,7 +88,7 @@ def calculate(compid):
             if not session['canAdminComp']:
                 wcif,_ =  getWCIFPublic(session['compid'])
             # printingString = makeHtml(wcif)
-            return render_template("comp_settings.html",user_name=session['name'])
+            return render_template("comp_settings.html",comp=session['compid'],user_name=session['name'])
         else:
             return fail_string
     else:
@@ -115,13 +119,12 @@ def showCompetition():
     else:
         printEvents = session['eventsCalculate'] 
     overview = applySorting(getSolveTime(wcif,session['eventsCalculate']),session['competitorOrdering'])
-    return render_template("show_comp.html",overview=overview,status=statusCode,events=printEvents)
+    return render_template("show_comp.html",overview=overview,status=statusCode,events=printEvents,comp=session['compid'])
 
 # app.run(host=host,port=port)
-# app.run(debug=True)
 
 if __name__ == '__main__':
-    app.run(port=5000)
+    app.run(port=5000,debug=False)
 
 
 # https://www.worldcubeassociation.org/api/v0/users/6777?upcoming_competitions=true&ongoing_competitions=true

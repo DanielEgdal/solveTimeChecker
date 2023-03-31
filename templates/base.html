@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>DVE Solve time checker</title>
+    <title>Solve time checker</title>
     <link rel="shortcut icon" href="{{url_for('static',filename='logo.png')}}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet"  type="text/css" href="{{url_for('.static', filename='style.css')}}">
     {% block extrahead %} {% endblock %}
 </head>
@@ -14,13 +15,13 @@
 
     {% if user_name %}
     <p>Logged in as {{user_name}} </p>
-    <form action="/me" class="inline">
-        <button class="float-left submit-button" >Go to my upcoming organised comps</button>
-    </form>
+    <a href="/me">
+        <button>Go to my upcoming comps</button>
+    </a> 
 
-    <form action="/logout" class="inline">
-        <button class="float-left submit-button" >Logout</button>
-    </form>
+    <a href="/logout">
+        <button>Logout</button>
+    </a> 
     {% else %}
     <p>Not logged in</p>
     {% endif %}

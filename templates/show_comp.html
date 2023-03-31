@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2>{{comp}}</h2>
+<p>You are looking at the results from <b>{{comp}}</b></p>
+
+
 {% if status == 200 %}
 <p class="managerStatus goodManager">You have admin access to this competition.</p>
 {% else %}

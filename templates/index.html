@@ -2,29 +2,15 @@
 
 {% block content %}
    <h1>DVE Solve time checker</h1>
-    <p>This site is still work in progress. There are two ways to authenticate, where at least one should work. The fastest way is to simply click the "Authenticate me!" me button below.</p>
-    <a href="https://www.worldcubeassociation.org/oauth/authorize?client_id=jvK8thQ_pdL4Tf2lmXcjuQrr11X1mjw0p0UtF8M4q4o&redirect_uri=https%3A%2F%2Ftimelimits.danskspeedcubingforening.dk%2Fshow_token&response_type=token&scope=manage_competitions+public">
-        <button>Authenticate me! (DSF)</button>
-    </a> 
-    
-    <p></p>
-
-    <a href="https://www.worldcubeassociation.org/oauth/authorize?client_id=jvK8thQ_pdL4Tf2lmXcjuQrr11X1mjw0p0UtF8M4q4o&redirect_uri=http%3A%2F%2Flocalhost%3A5000%2Fshow_token&response_type=token&scope=manage_competitions+public">
-        <button>Authenticate me! (Local Host)</button>
-    </a> 
-
-    <p>If the button above doesn't work, you will have to press <a href="https://www.worldcubeassociation.org/oauth/authorize?client_id=jvK8thQ_pdL4Tf2lmXcjuQrr11X1mjw0p0UtF8M4q4o&redirect_uri=urn%3Aietf%3Awg%3Aoauth%3A2.0%3Aoob&response_type=token&scope=manage_competitions+public" target="_blank">this link</a>
-    which will show you a token located within the URL and paste into the field below.</p>
+    <p>Hello! You can use this website to calculate the cumulative amount of time all competitors have used to solve at a specific competition.</p>
 
    <p>Authentication is needed if you are a competition organiser and want 'live' times of the competitors, or if you want to more easily find your competition. 
     If you are not an organiser of the competition, it might take up to 5 minutes from the last 'sync' on WCA live to update.</p>
 
-    <form action="/me" method="POST"
-        <p>Access token <input type = "text" name = "token" /> </p>
-        <p><input type = "submit" value = "Submit access token" /></p>
-    </form>
+    <a href="https://www.worldcubeassociation.org/oauth/authorize?client_id=jvK8thQ_pdL4Tf2lmXcjuQrr11X1mjw0p0UtF8M4q4o&redirect_uri=https%3A%2F%2Ftimelimits.danskspeedcubingforening.dk%2Fshow_token&response_type=token&scope=manage_competitions+public">
+        <button>Authenticate me! (WCA)</button>
+    </a> 
 
-    <form action="/playground" method="GET"
-        <p><input type = "submit" value = "Go to playground without access token" /></p>
-    </form>
+    <p>If you do not want to go directly to a competition without logging in (or you cannot find the competition you are looking for), go to https://timelimits.danskspeedcubingforening.dk/<b>YourCompID</b> </p>
+
 {% endblock %}
